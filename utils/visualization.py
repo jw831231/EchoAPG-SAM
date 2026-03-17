@@ -169,4 +169,4 @@ def process_and_visualize(image_tensor, mask_tensor, output_dir, img_file, promp
         'dice': dice_score, 
         'iou': iou, 
         'hd': hd, 
-        'hd95': hd95 
+        'hd95': hd95 }

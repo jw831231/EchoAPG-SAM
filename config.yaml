@@ -1,0 +1,21 @@
+model:
+  type: vit_b
+  checkpoint: /kaggle/input/segment-anything/pytorch/vit-b/1/model.pth
+  lora_r: 16
+
+training:
+  epochs: 50
+  lr: 1e-4
+  batch_size: 6          # LoRA+MSPAd后可开到6
+  patience: 8
+  device: cuda
+
+data:
+  image_dir: /kaggle/input/camus-processing-dataset/images
+  mask_dir: /kaggle/input/camus-processing-dataset/masks
+  train_ratio: 0.8
+  val_ratio: 0.1
+
+loss:
+  focal_weight: 0.5
+  boundary_weight: 0.05

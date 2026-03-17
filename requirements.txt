@@ -1,0 +1,17 @@
+
+---
+
+### 2. `requirements.txt`
+
+```txt
+torch>=2.4.0
+torchvision
+segment-anything
+peft
+albumentations
+opencv-python
+scipy
+matplotlib
+tqdm
+wandb
+pyyaml

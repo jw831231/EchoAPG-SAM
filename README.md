@@ -45,17 +45,17 @@ Comparison of structure segmentation between our EchoAPG-SAM and other state-of-
 a represents the values came from EchoEFNet, b represents the values came from SAMUS.
 | Method          | Dice   | IoU    | HD     |
 |-----------------|--------|--------|--------|
-| **a**UNet       | 92.20  | 85.90  | -      |
-| **a**UNet++     | 91.95  | 85.55  | -      |
-| **b**SwinUNet   | 91.72  | 84.82  | 12.80  |
-| **b**SETR       | 92.82  | 86.76  | 11.34  |
-| **b**TransFuse  | 93.30  | 87.55  | 10.07  |
-| **a**DeepLabv3+ | 90.90  | 83.80  | -      |
-| **a**EchoEFNet  | 93.05  | 87.30  | -      |
-| **b**MedSAM     | 87.52  | 78.22  | 15.28  |
-| **b**MSA        | 90.95  | 83.70  | 11.29  |
-| **b**SAMed      | 87.67  | 78.67  | 13.24  |
-| **MemSAM**      | 93.31  | 87.61  | -      |
+| UNet       | 92.20  | 85.90  | -      |
+| UNet++     | 91.95  | 85.55  | -      |
+| SwinUNet   | 91.72  | 84.82  | 12.80  |
+| SETR       | 92.82  | 86.76  | 11.34  |
+| TransFuse  | 93.30  | 87.55  | 10.07  |
+| DeepLabv3+ | 90.90  | 83.80  | -      |
+| EchoEFNet  | 93.05  | 87.30  | -      |
+| MedSAM     | 87.52  | 78.22  | 15.28  |
+| MSA        | 90.95  | 83.70  | 11.29  |
+| SAMed      | 87.67  | 78.67  | 13.24  |
+| MemSAM      | 93.31  | 87.61  | -      |
 | **EchoAPG-SAM** | **93.34** | **87.77** | **7.78** |
 
 Table 2
@@ -63,14 +63,14 @@ Comparison of LV segmentation between our EchoAPG-SAM and other state-of-the-art
 a represents the values came from MemSAM.
 | Method          | Dice   | IoU    | HD95   |
 |-----------------|--------|--------|--------|
-| **a**UNet       | 91.36  | 83.27  | 4.98   |
-| **a**SwinUNet   | 87.79  | 80.14  | 6.61   |
-| **a**H2Former   | 90.21  | 82.46  | 5.12   |
-| **a**MedSAM     | 86.47  | 79.19  | 7.97   |
-| **a**MSA        | 87.91  | 78.34  | 6.67   |
-| **a**SAMed      | 86.35  | 78.96  | 7.12   |
-| **a**SAMUS      | 91.79  | 84.32  | 5.35   |
-| **a**MemSAM     | 92.78  | 85.89  | 4.75   |
+| UNet       | 91.36  | 83.27  | 4.98   |
+| SwinUNet   | 87.79  | 80.14  | 6.61   |
+| H2Former   | 90.21  | 82.46  | 5.12   |
+| MedSAM     | 86.47  | 79.19  | 7.97   |
+| MSA        | 87.91  | 78.34  | 6.67   |
+| SAMed      | 86.35  | 78.96  | 7.12   |
+| SAMUS      | 91.79  | 84.32  | 5.35   |
+| MemSAM     | 92.78  | 85.89  | 4.75   |
 | **EchoAPG-SAM** | **91.27** | **84.22** | **2.74** |
 
 Table 3

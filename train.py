@@ -21,9 +21,11 @@ from peft import LoraConfig, get_peft_model
 
 if __name__ == "__main__": 
     device = "cuda" if torch.cuda.is_available() else "cpu" 
-    sam_checkpoint = "/kaggle/input/segment-anything/pytorch/vit-b/1/model.pth" 
-    model_type = "vit_b" 
-    sam = sam_model_registry[model_type](checkpoint=sam_checkpoint) 
+    with open("config.yaml") as f:
+        cfg = yaml.safe_load(f)
+    
+    sam = EnhancedSAM(cfg['model']['checkpoint'], lora_r=cfg['model']['lora_r'])
+    model = ViTPromptGenerator(sam.sam)
     sam.to(device=device) 
     predictor = SamPredictor(sam) 
     prompt_generator = ViTPromptGenerator(sam) 

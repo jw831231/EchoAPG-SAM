@@ -25,20 +25,20 @@ class MSPAd(nn.Module):
         self.ln_out = nn.LayerNorm(dim)
         self.adapter_scale = nn.Parameter(torch.tensor(0.0))
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:  # x: [B, C, H, W]
-        x_down = self.downsample(x)                    # [B, C, H/2, W/2]
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x_down = self.downsample(x) 
         B, C, H_down, W_down = x_down.shape
-        x_down = x_down.permute(0, 2, 3, 1)            # [B, H_down, W_down, C]
+        x_down = x_down.permute(0, 2, 3, 1) 
         x_down = self.ln_down(x_down)
-        x_down = x_down.permute(0, 3, 1, 2)            # 回 [B, C, H_down, W_down]
+        x_down = x_down.permute(0, 3, 1, 2)
         
         branch_outputs = [branch(x_down) for branch in self.branches]
-        concat = torch.cat(branch_outputs, dim=1)      # [B, dim, H_down, W_down]
+        concat = torch.cat(branch_outputs, dim=1) 
         fused = self.fuse(concat)
         
-        up = self.upsample(fused)                      # [B, dim, H, W]
-        up = up.permute(0, 2, 3, 1)                    # [B, H, W, dim]
+        up = self.upsample(fused) 
+        up = up.permute(0, 2, 3, 1) 
         up = self.ln_out(up)
-        up = up.permute(0, 3, 1, 2)                    # 回 [B, dim, H, W]
+        up = up.permute(0, 3, 1, 2)
         
         return self.adapter_scale * up

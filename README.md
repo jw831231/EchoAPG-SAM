@@ -37,7 +37,7 @@ python train.py
 # Left ventricle segmentation + visualization (recommended first)
 python inference.py
 
-# Ejection Fraction (EF) estimation
+# 7. Ejection Fraction (EF) estimation
 python inference_ef.py
 
 EchoAPG-SAM/

@@ -115,7 +115,7 @@ class CBAM(nn.Module):
         x = x * spatial_att
         return x
 
-class ViTPromptGenerator(nn.Module):
+class HPSPGen(nn.Module):
     def __init__(self, sam_model, num_classes=1):
         super().__init__()
         self.feature_extractor = SAMFeatureExtractor(sam_model)

@@ -32,7 +32,7 @@ class CAMUSDataset(Dataset):
         
         if self.transform:
             augmented = self.transform(image=image, mask=mask)
-            image = augmented['image']  # [C, H, W]
-            mask = augmented['mask'].unsqueeze(0)  # [1, H, W]
+            image = augmented['image']
+            mask = augmented['mask'].unsqueeze(0)
         
         return image, mask, img_file

@@ -40,7 +40,7 @@ if __name__ == "__main__":
         image_dir=test_image_dir,
         mask_dir=test_mask_dir,
         transform=None,
-        filelist_csv_path=filelist_csv_path   # ←←← 关键适配
+        filelist_csv_path=filelist_csv_path
     )
     
     filelist_df = pd.read_csv(filelist_csv_path)

@@ -47,7 +47,6 @@ if __name__ == "__main__":
     inference_times = []
  
     for idx in range(len(test_dataset)):
-    #for idx in range(500):
         img_file = test_dataset.image_files[idx]
         mask_file = test_dataset.mask_files[idx]
         parts = img_file.split('_')
@@ -68,7 +67,7 @@ if __name__ == "__main__":
             inference_times.append(inference_time)
             for key in metrics:
                 metrics[key].append(result[key])
-            # 存储 Dice 分数到字典
+
             if filename not in dice_dict:
                 dice_dict[filename] = {}
             dice_dict[filename][phase] = result['dice']

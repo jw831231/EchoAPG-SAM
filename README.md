@@ -96,7 +96,7 @@ pip install -r requirements.txt
 
 
 Citation
-@misc{jw8312312026echoapg,
+@misc{EchoAPG-SAM2026,
   author = {Wei Jiang},
   title = {EchoAPG-SAM: Automatic prompt generator for SAM in two-dimensional echocardiography left ventricular segmentation and ejection fraction estimation},
   year = {2026},

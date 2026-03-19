@@ -67,15 +67,6 @@ trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
 print(f"可训练参数量: {trainable_params:,} (LoRA + MSPAd + Prompt Generator)")
 
 
-print(" 加载 CAMUS 数据集（患者级 8:1:1 划分）...")
-all_patients = sorted(list(set([f.split('_')[0] for f in os.listdir(cfg["data"]["image_dir"]) 
-                               if f.endswith('.png') and '_mask' not in f])))
-random.shuffle(all_patients)
-n = len(all_patients)
-
-train_patients = all_patients[:int(cfg["data"]["train_ratio"] * n)]
-val_patients   = all_patients[int(cfg["data"]["train_ratio"] * n):int(0.9 * n)]
-
 print(" 加载 EchoNet-Dynamic 数据集...")
 train_dataset = EchoNetDataset(
     image_dir=cfg["data"]["image_dir"],

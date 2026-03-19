@@ -25,9 +25,7 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 mkdir -p checkpoints
 wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth -O checkpoints/sam_vit_b.pth
 
-# 4. Configure paths (Very Important!)
-The default config.yaml uses Kaggle paths. You must modify it for local use:
-# Create a local config copy
+# 4. Configure paths
 cp config.yaml config_local.yaml
 
 # 5. Train the model

@@ -5,19 +5,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from torch.amp import autocast
 from models.sam_adapter import EnhancedSAM
-from models.prompt_generator import ViTPromptGenerator
+from models.prompt_generator import HPSPGen
 from datasets.echonet import EchoNetDataset
 from utils.visualization import process_and_visualize
 from utils.ef_utils import calculate_volume_from_mask, calculate_s_old, visualize_volume_geometry
 from sklearn.metrics import r2_score, mean_squared_error
 
-test_image_dir = "/kaggle/input/echonet-dynamic-processing/echonet_processed/TEST/Images"
-test_mask_dir = "/kaggle/input/echonet-dynamic-processing/echonet_processed/TEST/Masks"
-filelist_csv_path = "/kaggle/input/echonet-dynamic-filelist/FileList.csv"
-volumetracings_csv_path = "/kaggle/input/echonet-dynamic-filelist/VolumeTracings.csv"
+test_image_dir = cfg["data"]["image_dir"]
+test_mask_dir = cfg["data"]["mask_dir"]
+filelist_csv_path = cfg["data"]["filelist_csv"]
+volumetracings_csv_path = cfg["data"]["volumetracings_csv"]
 best_model_path = "checkpoints/best_lora_mspad_autoprompt.pth"
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+output_dir = "outputs"
+os.makedirs(output_dir, exist_ok=True)
 
 if __name__ == "__main__":
     enhanced_sam = EnhancedSAM(
@@ -25,7 +27,7 @@ if __name__ == "__main__":
         checkpoint=cfg["model"]["checkpoint"],
         lora_r=cfg["model"]["lora_r"]
     ) 
-    model = ViTPromptGenerator(enhanced_sam.sam).to(device)
+    model = HPSPGen(enhanced_sam.sam).to(device)
     model.load_state_dict(torch.load(best_model_path, map_location=device), strict=False)
     model.eval()
 

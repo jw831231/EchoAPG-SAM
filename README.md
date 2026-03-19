@@ -93,3 +93,12 @@ EchoNet-Dynamic1 refers to testing using fixed 32 frames of data, and EchoNet-Dy
 Installation
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 pip install -r requirements.txt
+
+
+Citation
+@misc{jw8312312026echoapg,
+  author = {Wei Jiang},
+  title = {EchoAPG-SAM: Automatic prompt generator for SAM in two-dimensional echocardiography left ventricular segmentation and ejection fraction estimation},
+  year = {2026},
+  url = {https://github.com/jw831231/EchoAPG-SAM}
+}

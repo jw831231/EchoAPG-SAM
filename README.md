@@ -17,26 +17,47 @@
 git clone https://github.com/jw831231/EchoAPG-SAM.git
 cd EchoAPG-SAM
 
-# 2. Install dependencies
-pip install -r requirements.txt
+# 2. Install PyTorch and dependencies
+# Install PyTorch with CUDA support (CUDA 12.1 recommended)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
-# 3. Train the model
+# 3. Download the official SAM weights (Required)
+mkdir -p checkpoints
+wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth -O checkpoints/sam_vit_b.pth
+
+# 4. Configure paths (Very Important!)
+The default config.yaml uses Kaggle paths. You must modify it for local use:
+# Create a local config copy
+cp config.yaml config_local.yaml
+
+# 5. Train the model
 python train.py
 
 # 4. Run inference & visualization
+# Left ventricle segmentation + visualization (recommended first)
 python inference.py
+
+# Ejection Fraction (EF) estimation
+python inference_ef.py
 
 EchoAPG-SAM/
 ├── train.py                    # Main training script
-├── inference.py                # Testing + visualization
-├── config.yaml                 # Hyperparameters
-├── models/                     # EnhancedSAM (LoRA+MSPAd) + Prompt Generator
-├── datasets/                   # CAMUSDataset
-├── utils/                      # Metrics and visualization
+├── inference.py                # Segmentation inference & visualization
+├── inference_ef.py             # Ejection Fraction (EF) estimation (new)
+├── config.yaml                 # Configuration file
+├── models/                     # EnhancedSAM (LoRA + MSPAd) + ViTPromptGenerator
+├── datasets/                   # CAMUS & EchoNet-Dynamic loaders
+│   ├── camus.py
+│   └── echonet.py
+├── utils/                      # Metrics, visualization & EF tools
+│   ├── ef_utils.py
+│   └── visualization.py
 ├── outputs/                    # Loss curves & result images
-├── checkpoints/                # Best model & clean weights
+├── checkpoints/                # Model weights (currently empty)
 ├── requirements.txt
-└── LICENSE
+├── LICENSE
+├── .gitignore
+└── README.md
 
 Results Comparison
 
@@ -89,10 +110,6 @@ EchoNet-Dynamic1 refers to testing using fixed 32 frames of data, and EchoNet-Dy
 | MU-Net               | Simpson   | 6.61    | 8.91     | -     | -     |
 | EchoSAM              | Simpson   | 6.39    | 8.56     | -     | -     |
 | **EchoAPG-SAM**      | **Simpson**| **6.46**| **8.21** | **0.55** | -     |
-
-Installation
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install -r requirements.txt
 
 
 Citation

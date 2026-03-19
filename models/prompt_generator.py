@@ -1,5 +1,7 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.amp import autocast
 from models.sam_adapter import EnhancedSAM
 
 class SAMFeatureExtractor(nn.Module):
@@ -155,7 +157,7 @@ class ViTPromptGenerator(nn.Module):
             nn.Conv2d(32, num_classes, 1)
         )
     def forward(self, x):
-        with autocast(device_type='cuda'): # 更新为新API
+        with autocast(device_type='cuda', dtype=torch.float16):
             vit_features = self.feature_extractor(x)
 
             projected = []

@@ -71,7 +71,7 @@ def process_and_visualize(image_tensor, mask_tensor, output_dir, img_file, promp
         input_tensor_1024 = F.interpolate(input_tensor, size=(1024, 1024), mode='bicubic', align_corners=False)
         input_tensor_1024 = input_tensor_1024.repeat(1, 3, 1, 1)
 
-        # === 新增SAM normalize ===
+
         input_tensor_1024 = input_tensor_1024 * 255.0
         mean = torch.tensor([123.675, 116.28, 103.53], device=device).view(1, 3, 1, 1)
         std = torch.tensor([58.395, 57.12, 57.375], device=device).view(1, 3, 1, 1)

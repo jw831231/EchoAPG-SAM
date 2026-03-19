@@ -1,7 +1,7 @@
 
 ---
 
-### 2. `requirements.txt`
+### 1. `requirements.txt`
 
 ```txt
 torch>=2.4.0

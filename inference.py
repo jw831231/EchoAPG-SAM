@@ -42,7 +42,8 @@ if __name__ == "__main__":
     test_dataset = EchoNetDataset(
         image_dir=cfg["data"]["image_dir"],
         mask_dir=cfg["data"]["mask_dir"],
-        transform=None
+        transform=None,
+        filelist_csv_path=cfg["data"]["filelist_csv"]
     )
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 

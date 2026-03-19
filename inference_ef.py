@@ -36,7 +36,12 @@ if __name__ == "__main__":
     model.load_state_dict(torch.load(best_model_path, map_location=device), strict=False)
     model.eval()
 
-    test_dataset = EchoNetDataset(test_image_dir, test_mask_dir)
+    test_dataset = EchoNetDataset(
+        image_dir=test_image_dir,
+        mask_dir=test_mask_dir,
+        transform=None,
+        filelist_csv_path=filelist_csv_path   # ←←← 关键适配
+    )
     
     filelist_df = pd.read_csv(filelist_csv_path)
     filelist_df = filelist_df[filelist_df['Split'] == 'TEST']
@@ -47,8 +52,6 @@ if __name__ == "__main__":
  
     
     dice_dict = {}
- 
-    
     masks_dict = {}
     metrics = {'dice': [], 'iou': [], 'hd': [], 'hd95': []}
     inference_times = []
@@ -66,11 +69,11 @@ if __name__ == "__main__":
             start_time = time.perf_counter()
             visualize = (idx < 10)
             sam_mask, result = process_and_visualize(
-                image_tensor=None,  
-                mask_tensor=None,
+                image_path=image_path,
+                mask_path=mask_path,
                 output_dir=output_dir,
                 img_file=img_file,
-                prompt_generator=model, 
+                prompt_generator=model,
                 sam_predictor=enhanced_sam.sam,
                 visualize=visualize,
                 device=device,

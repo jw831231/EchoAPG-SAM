@@ -33,7 +33,7 @@ cp config.yaml config_local.yaml
 # 5. Train the model
 python train.py
 
-# 4. Run inference & visualization
+# 6. Run inference & visualization
 # Left ventricle segmentation + visualization (recommended first)
 python inference.py
 

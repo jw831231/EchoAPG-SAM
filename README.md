@@ -114,7 +114,7 @@ EchoNet-Dynamic1 refers to testing using fixed 32 frames of data, and EchoNet-Dy
 
 Citation
 @misc{EchoAPG-SAM2026,
-  author = {Wei Jiang},
+  author = {Wei Jiang：Department of Basic Medical Sciences, Chongqing Medical and Pharmaceutical College, 401331, Chongqing, China},
   title = {EchoAPG-SAM: Automatic prompt generator for SAM in two-dimensional echocardiography left ventricular segmentation and ejection fraction estimation},
   year = {2026},
   url = {https://github.com/jw831231/EchoAPG-SAM}

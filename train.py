@@ -16,9 +16,9 @@ from albumentations.pytorch import ToTensorV2
 
 
 from models.sam_adapter import EnhancedSAM
-from models.prompt_generator import ViTPromptGenerator
+from models.prompt_generator import HPSPGen
 from models.losses import SegLoss 
-from datasets.camus import CAMUSDataset
+from datasets.echonet import EchoNetDataset
 
 
 with open("config.yaml") as f:
@@ -55,8 +55,7 @@ enhanced_sam = EnhancedSAM(
     lora_r=cfg["model"]["lora_r"]
 ).to(device)
 
-model = ViTPromptGenerator(enhanced_sam.sam).to(device)
-
+model = HPSPGen(enhanced_sam.sam).to(device)
 
 for name, param in model.named_parameters():
     if "lora" in name.lower() or "mspad" in name.lower():
@@ -77,17 +76,16 @@ n = len(all_patients)
 train_patients = all_patients[:int(cfg["data"]["train_ratio"] * n)]
 val_patients   = all_patients[int(cfg["data"]["train_ratio"] * n):int(0.9 * n)]
 
-train_dataset = CAMUSDataset(
+print(" 加载 EchoNet-Dynamic 数据集...")
+train_dataset = EchoNetDataset(
     image_dir=cfg["data"]["image_dir"],
     mask_dir=cfg["data"]["mask_dir"],
-    transform=train_transform,
-    patient_list=train_patients
+    transform=train_transform
 )
-val_dataset = CAMUSDataset(
+val_dataset = EchoNetDataset(
     image_dir=cfg["data"]["image_dir"],
     mask_dir=cfg["data"]["mask_dir"],
-    transform=val_transform,
-    patient_list=val_patients
+    transform=val_transform
 )
 
 train_loader = DataLoader(train_dataset, batch_size=cfg["training"]["batch_size"], shuffle=True, num_workers=2, pin_memory=True)

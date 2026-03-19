@@ -7,8 +7,8 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as F
 
 from models.sam_adapter import EnhancedSAM
-from models.prompt_generator import ViTPromptGenerator
-from datasets.camus import CAMUSDataset
+from models.prompt_generator import HPSPGen
+from datasets.echonet import EchoNetDataset
 from utils.visualization import process_and_visualize, dice_coefficient, iou_score, hausdorff_distance, hausdorff_distance_95
 
 if __name__ == "__main__":
@@ -27,7 +27,7 @@ if __name__ == "__main__":
         lora_r=cfg["model"]["lora_r"]
     ).to(device)
 
-    model = ViTPromptGenerator(sam.sam).to(device)
+    model = HPSPGen(sam.sam).to(device)
 
     best_path = "checkpoints/best_lora_mspad_autoprompt.pth" 
     if os.path.exists(best_path):
@@ -39,11 +39,10 @@ if __name__ == "__main__":
 
     model.eval()
 
-    test_dataset = CAMUSDataset(
+    test_dataset = EchoNetDataset(
         image_dir=cfg["data"]["image_dir"],
         mask_dir=cfg["data"]["mask_dir"],
-        transform=None,
-        patient_list=None
+        transform=None
     )
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 

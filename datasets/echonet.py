@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import random
 from torch.utils.data import Dataset, Sampler
-from albumentations.pytorch import ToTensorV2  # 保持和原仓库一致
+from albumentations.pytorch import ToTensorV2
 
 class EchoNetDataset(Dataset):
     def __init__(self, image_dir, mask_dir, transform=None, filelist_csv_path=None, max_samples=None):

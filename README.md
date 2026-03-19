@@ -43,9 +43,9 @@ python inference_ef.py
 EchoAPG-SAM/
 ├── train.py                    # Main training script
 ├── inference.py                # Segmentation inference & visualization
-├── inference_ef.py             # Ejection Fraction (EF) estimation (new)
+├── inference_ef.py             # Ejection Fraction (EF) estimation
 ├── config.yaml                 # Configuration file
-├── models/                     # EnhancedSAM (LoRA + MSPAd) + ViTPromptGenerator
+├── models/                     # EnhancedSAM (LoRA + MSPAd) + ViTPromptGenerator（HPSPGen）
 ├── datasets/                   # CAMUS & EchoNet-Dynamic loaders
 │   ├── camus.py
 │   └── echonet.py

@@ -2,6 +2,8 @@ import os
 import torch
 import pandas as pd
 import numpy as np
+import time
+import yaml
 import matplotlib.pyplot as plt
 from torch.amp import autocast
 from models.sam_adapter import EnhancedSAM
@@ -11,6 +13,9 @@ from utils.visualization import process_and_visualize
 from utils.ef_utils import calculate_volume_from_mask, calculate_s_old, visualize_volume_geometry
 from sklearn.metrics import r2_score, mean_squared_error
 
+with open("config.yaml") as f:
+    cfg = yaml.safe_load(f)
+    
 test_image_dir = cfg["data"]["image_dir"]
 test_mask_dir = cfg["data"]["mask_dir"]
 filelist_csv_path = cfg["data"]["filelist_csv"]
@@ -61,8 +66,15 @@ if __name__ == "__main__":
             start_time = time.perf_counter()
             visualize = (idx < 10)
             sam_mask, result = process_and_visualize(
-                image_path, mask_path, output_dir, img_file,
-                prompt_generator, predictor, visualize=visualize, phase=phase
+                image_tensor=None,  
+                mask_tensor=None,
+                output_dir=output_dir,
+                img_file=img_file,
+                prompt_generator=model, 
+                sam_predictor=enhanced_sam.sam,
+                visualize=visualize,
+                device=device,
+                phase=phase
             )
             end_time = time.perf_counter()
             inference_time = end_time - start_time

@@ -1,31 +1,21 @@
-# =============================================
-# EchoAPG-SAM - Corrected Local config.yaml
-# Fixes applied:
-#   1. Removed all Kaggle paths → pure local paths
-#   2. Points directly to the official SAM checkpoint
-#   3. Clean structure with clear English comments
-#   4. Fully compatible with existing train.py / inference.py scripts
-# =============================================
-
+# EchoAPG-SAM - EchoNet-Dynamic config.yaml
 model:
   type: vit_b
-  # ★★★ MUST point to the SAM weight you just downloaded
   checkpoint: ./checkpoints/sam_vit_b.pth
-  lora_r: 16                     # LoRA rank (16 is stable and effective)
+  lora_r: 16
 
 training:
-  epochs: 100
+  epochs: 50
   lr: 1e-4
-  batch_size: 10                  # Recommended for GPU with LoRA + MSPAd (use 4 if OOM on 8GB VRAM)
+  batch_size: 10
   patience: 10
-  device: cuda                   # Change to "cpu" for testing without GPU
+  device: cuda
 
 data:
-  # ★★★ IMPORTANT: Organize your CAMUS dataset like this:
-  #   images/  → all .png ultrasound images
-  #   masks/   → corresponding .png segmentation masks (filenames must match exactly)
-  image_dir: ./data/camus/images
-  mask_dir: ./data/camus/masks
+  image_dir: ./data/echonet/images
+  mask_dir: ./data/echonet/masks
+  filelist_csv: ./data/echonet/FileList.csv
+  volumetracings_csv: ./data/echonet/VolumeTracings.csv
   train_ratio: 0.8
   val_ratio: 0.1
 

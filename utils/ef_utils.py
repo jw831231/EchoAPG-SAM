@@ -27,7 +27,7 @@ def find_intersection_points(line_p1, line_p2, contour_points):
     return p1, p2
 
 def calculate_volume_from_mask(mask, visualize=False, spacing=0.66):
-    # 确保是uint8二值图
+
     if mask.dtype != np.uint8:
         mask = (mask > 0).astype(np.uint8)
     
@@ -45,7 +45,7 @@ def calculate_volume_from_mask(mask, visualize=False, spacing=0.66):
         return 0.0, None
     contour = max(contours, key=cv2.contourArea)
     
-    # === 文献方法：凸包找心尖（apex）===
+
     hull = cv2.convexHull(contour)
     hull_points = hull.squeeze()
     if hull_points.ndim == 1:
@@ -53,7 +53,6 @@ def calculate_volume_from_mask(mask, visualize=False, spacing=0.66):
     apex_idx = np.argmin(hull_points[:, 1])
     apex = tuple(hull_points[apex_idx].astype(float))
     
-    # === 文献方法：最小面积旋转矩形找base ===
     rect = cv2.minAreaRect(contour)  
     box = cv2.boxPoints(rect) 
     box = box.astype(float)

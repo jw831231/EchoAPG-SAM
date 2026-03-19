@@ -13,6 +13,7 @@ from tqdm import tqdm
 import time
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
+from datasets.echonet import BalancedSampler
 
 
 from models.sam_adapter import EnhancedSAM
@@ -71,15 +72,23 @@ print(" 加载 EchoNet-Dynamic 数据集...")
 train_dataset = EchoNetDataset(
     image_dir=cfg["data"]["image_dir"],
     mask_dir=cfg["data"]["mask_dir"],
-    transform=train_transform
+    transform=train_transform,
+    filelist_csv_path=cfg["data"]["filelist_csv"]
 )
 val_dataset = EchoNetDataset(
     image_dir=cfg["data"]["image_dir"],
     mask_dir=cfg["data"]["mask_dir"],
-    transform=val_transform
+    transform=val_transform,
+    filelist_csv_path=cfg["data"]["filelist_csv"]
 )
 
-train_loader = DataLoader(train_dataset, batch_size=cfg["training"]["batch_size"], shuffle=True, num_workers=2, pin_memory=True)
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=cfg["training"]["batch_size"],
+    sampler=BalancedSampler(train_dataset), 
+    num_workers=4,
+    pin_memory=True
+)
 val_loader   = DataLoader(val_dataset,   batch_size=cfg["training"]["batch_size"], shuffle=False, num_workers=2, pin_memory=True)
 
 

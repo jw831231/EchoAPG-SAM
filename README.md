@@ -59,7 +59,7 @@ a represents the values came from EchoEFNet, b represents the values came from S
 | **EchoAPG-SAM** | **93.34** | **87.77** | **7.78** |
 
 Table 2
-Comparison of LV segmentation between our EchoAPG-SAM and other state-of-the-art methods on the EchoNet-Dynamic dataset (HD uses HD95).
+Comparison of LV segmentation between our EchoAPG-SAM and other state-of-the-art methods on the EchoNet-Dynamic dataset (HD uses HD95). 
 a represents the values came from MemSAM.
 | Method          | Dice   | IoU    | HD95   |
 |-----------------|--------|--------|--------|

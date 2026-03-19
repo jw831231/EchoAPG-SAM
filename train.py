@@ -48,7 +48,7 @@ val_transform = A.Compose([
 ])
 
 
-print("🚀 正在构建 LoRA + MSPAd + 智能Prompt Generator 模型...")
+print("正在构建 LoRA + MSPAd + 智能Prompt Generator 模型...")
 enhanced_sam = EnhancedSAM(
     model_type=cfg["model"]["type"],
     checkpoint=cfg["model"]["checkpoint"],
@@ -65,10 +65,10 @@ for name, param in model.named_parameters():
         param.requires_grad = False
 
 trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-print(f"✅ 可训练参数量: {trainable_params:,} (LoRA + MSPAd + Prompt Generator)")
+print(f"可训练参数量: {trainable_params:,} (LoRA + MSPAd + Prompt Generator)")
 
 
-print("📊 加载 CAMUS 数据集（患者级 8:1:1 划分）...")
+print(" 加载 CAMUS 数据集（患者级 8:1:1 划分）...")
 all_patients = sorted(list(set([f.split('_')[0] for f in os.listdir(cfg["data"]["image_dir"]) 
                                if f.endswith('.png') and '_mask' not in f])))
 random.shuffle(all_patients)
@@ -111,7 +111,7 @@ checkpoint_path = os.path.join(checkpoint_dir, "checkpoint.pth")
 best_model_path = os.path.join(checkpoint_dir, "best_lora_mspad_autoprompt.pth")
 
 if os.path.exists(checkpoint_path):
-    print(f"♻️ 恢复断点训练: {checkpoint_path}")
+    print(f" 恢复断点训练: {checkpoint_path}")
     ckpt = torch.load(checkpoint_path, map_location=device)
     model.load_state_dict(ckpt['model_state_dict'], strict=False)
     optimizer.load_state_dict(ckpt['optimizer_state_dict'])
@@ -131,7 +131,7 @@ def compute_metrics(pred, target):
     return dice.mean().item(), iou.mean().item()
 
 
-print("🔥 开始训练...")
+print("开始训练...")
 train_losses, val_losses = [], []
 train_dices, val_dices = [], []
 train_ious, val_ious = [], []
@@ -146,7 +146,7 @@ for epoch in range(start_epoch, cfg["training"]["epochs"]):
     for images, masks, _ in tqdm(train_loader, desc=f"Epoch {epoch+1} Train"):
         images, masks = images.to(device), masks.to(device).float()
         
-        # SAM 标准预处理（1024x1024 + normalize）
+        
         images_1024 = F.interpolate(images, size=(1024, 1024), mode='bicubic', align_corners=False)
         images_1024 = images_1024.repeat(1, 3, 1, 1)
         images_1024 = images_1024 * 255.0
@@ -157,7 +157,7 @@ for epoch in range(start_epoch, cfg["training"]["epochs"]):
         masks_1024 = F.interpolate(masks, size=(1024, 1024), mode='nearest')
 
         with autocast(device_type='cuda'):
-            pred = model(images_1024)                    # → [B, 1, 1024, 1024] logits
+            pred = model(images_1024)
             loss = criterion(pred, masks_1024)
 
         scaler.scale(loss).backward()
@@ -240,7 +240,7 @@ for epoch in range(start_epoch, cfg["training"]["epochs"]):
         best_val_dice = val_dice
         torch.save(model.state_dict(), best_model_path)
         enhanced_sam.save_clean_state(os.path.join(checkpoint_dir, "clean_best.pth"))
-        print(f"🎉 新最佳模型！Val Dice: {val_dice:.5f}")
+        print(f" 新最佳模型！Val Dice: {val_dice:.5f}")
 
 
 epochs_range = range(1, len(train_losses) + 1)
@@ -275,6 +275,6 @@ plt.legend()
 plt.savefig(os.path.join(output_dir, 'iou_curve.png'))
 plt.close()
 
-print(f"✅ 训练完成！")
+print(f"训练完成！")
 print(f"最佳模型保存至: {best_model_path}")
 print(f"损失/指标曲线保存至: {output_dir}")

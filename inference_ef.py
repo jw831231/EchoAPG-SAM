@@ -167,7 +167,7 @@ if __name__ == "__main__":
         ef_original = original_row['EF'].values[0]
         edv_original = original_row['EDV'].values[0]
         esv_original = original_row['ESV'].values[0]
-        # 获取对应的 Dice 分数从 dice_dict
+        
         ed_dice = dice_dict[filename].get('ED', 0.0)
         es_dice = dice_dict[filename].get('ES', 0.0)
         ef_abs_error = abs(ef_model - ef_original)
@@ -179,15 +179,15 @@ if __name__ == "__main__":
             'EF_model': ef_model,
             'EF_original': ef_original,
             'EF_abs_error': ef_abs_error,
-            'EDV_Dice': ed_dice, # 添加 EDV_Dice
+            'EDV_Dice': ed_dice, 
             'EDV_model': edv_model,
             'EDV_original': edv_original,
             'EDV_abs_error': edv_abs_error,
-            'ESV_Dice': es_dice, # 添加 ESV_Dice
+            'ESV_Dice': es_dice, 
             'ESV_model': esv_model,
             'ESV_original': esv_original,
             'ESV_abs_error': esv_abs_error,
-            'MAPE': mape_ef, # 恢复 MAPE 键
+            'MAPE': mape_ef,
         })
         if ed_geometry and ed_vis_count < 10:
             visualize_volume_geometry(ed_mask, ed_geometry, filename, 'ED', volume_vis_dir)
